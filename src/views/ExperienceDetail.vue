@@ -1,31 +1,60 @@
 <script setup lang="ts">
-import {ref, onMounted, computed} from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import Button from 'primevue/button'
-import TabView from 'primevue/tabview'
-import TabPanel from 'primevue/tabpanel'
-import { useExperiencesStore } from '../stores/experiences'
+import { ref, onMounted, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import Button from 'primevue/button';
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
+import { useExperiencesStore } from '../stores/experiences';
 
-const route = useRoute()
-const router = useRouter()
-const { t: _t } = useI18n()
+// Определение интерфейсов для данных
+interface Project {
+  name: string;
+  description: string;
+  impact: string;
+  technologies: string[];
+}
 
-const experiencesStore = useExperiencesStore()
+interface Experience {
+  id: string;
+  position: string;
+  company: string;
+  period: string;
+  location: string;
+  description: string;
+  achievements: string[];
+  responsibilities: string[];
+  technologies: string[];
+  projects: Project[];
+}
 
-const experiences = ref([])
+// Определение интерфейса для хранилища опыта
+interface ExperiencesStore {
+  experiences: Experience[];
+  fetchExperiences: () => Promise<void>;
+}
 
-const currentExperience = computed(() => experiences.value.find(experience => experience.id === route.params.id))
+const route = useRoute();
+const router = useRouter();
+const { t } = useI18n();
 
-onMounted(async () => {  
-   await experiencesStore.fetchExperiences()
-  experiences.value = experiencesStore.experiences
-  console.log(currentExperience.value);
-  
+const experiencesStore = useExperiencesStore() as ExperiencesStore; // Явное приведение типа
+const experiences = ref<Experience[]>([]);
+
+const currentExperience = computed<Experience | undefined>(() =>
+    experiences.value.find((experience) => experience.id === route.params.id)
+);
+
+onMounted(async () => {
+  await experiencesStore.fetchExperiences();
+  experiences.value = experiencesStore.experiences;
+
   if (!currentExperience.value) {
-    router.push('/experience')
+    router.push('/experience');
+  } else {
+    console.log(currentExperience.value);
   }
-})
+});
 </script>
 
 <template>
@@ -36,7 +65,7 @@ onMounted(async () => {
           <div>
             <Button
                 icon="pi pi-arrow-left"
-                label="Back to Experience"
+                :label="t('experience.backToExperience')"
                 class="p-button-text mb-4"
                 @click="router.push('/experience')"
             />
@@ -56,13 +85,13 @@ onMounted(async () => {
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div class="lg:col-span-2">
             <TabView>
-              <TabPanel header="Overview">
+              <TabPanel :header="t('experience.overview')">
                 <div class="py-4">
                   <p class="text-gray-700 dark:text-gray-300 mb-6">
                     {{ currentExperience.description }}
                   </p>
 
-                  <h3 class="text-xl font-semibold mb-4">Key Achievements</h3>
+                  <h3 class="text-xl font-semibold mb-4">{{ t('experience.keyAchievements') }}</h3>
                   <ul class="space-y-3 mb-6">
                     <li
                         v-for="(achievement, index) in currentExperience.achievements"
@@ -74,7 +103,7 @@ onMounted(async () => {
                     </li>
                   </ul>
 
-                  <h3 class="text-xl font-semibold mb-4">Core Responsibilities</h3>
+                  <h3 class="text-xl font-semibold mb-4">{{ t('experience.coreResponsibilities') }}</h3>
                   <ul class="space-y-3">
                     <li
                         v-for="(responsibility, index) in currentExperience.responsibilities"
@@ -88,7 +117,7 @@ onMounted(async () => {
                 </div>
               </TabPanel>
 
-              <TabPanel header="Projects">
+              <TabPanel :header="t('experience.projects')">
                 <div class="py-4">
                   <div
                       v-for="(project, index) in currentExperience.projects"
@@ -102,7 +131,7 @@ onMounted(async () => {
 
                     <div class="flex items-center text-primary-600 dark:text-primary-400 mb-4">
                       <i class="pi pi-chart-line mr-2"></i>
-                      <span class="font-medium">Impact: {{ project.impact }}</span>
+                      <span class="font-medium">{{ t('experience.impact') }}: {{ project.impact }}</span>
                     </div>
 
                     <div class="flex flex-wrap gap-2">
@@ -118,7 +147,7 @@ onMounted(async () => {
                 </div>
               </TabPanel>
 
-              <TabPanel header="Technologies">
+              <TabPanel :header="t('experience.technologies')">
                 <div class="py-4">
                   <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div
@@ -140,7 +169,7 @@ onMounted(async () => {
               <div class="p-6">
                 <div class="space-y-4">
                   <div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">Period</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('experience.period') }}</div>
                     <div class="font-medium flex items-center">
                       <i class="pi pi-calendar mr-2"></i>
                       {{ currentExperience.period }}
@@ -148,7 +177,7 @@ onMounted(async () => {
                   </div>
 
                   <div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">Location</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('experience.location') }}</div>
                     <div class="font-medium flex items-center">
                       <i class="pi pi-map-marker mr-2"></i>
                       {{ currentExperience.location }}
@@ -156,7 +185,7 @@ onMounted(async () => {
                   </div>
 
                   <div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">Technologies</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">{{ t('experience.technologies') }}</div>
                     <div class="flex flex-wrap gap-2">
                       <span
                           v-for="tech in currentExperience.technologies"

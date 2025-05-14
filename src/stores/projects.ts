@@ -1,19 +1,70 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { db, storage } from '../firebase/config';
-import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
-import { ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+  getDoc,
+} from 'firebase/firestore';
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  StorageReference,
+} from 'firebase/storage';
+
+// Определение интерфейсов для структур данных
+interface ImageWithDescription {
+  file?: File | null;
+  url?: string;
+  description?: string;
+}
+
+interface Project {
+  id?: string;
+  title: string;
+  description: string;
+  category: string;
+  technologies: string;
+  liveUrl?: string;
+  sourceUrl?: string;
+  images: { url: string; description: string }[];
+  createdAt: Date;
+  updatedAt?: Date;
+  [key: string]: any;
+
+}
+
+// Вспомогательные функции для работы со Storage (можно вынести в отдельный модуль)
+const uploadBytesToStorage = async (
+    storageReference: StorageReference,
+    file: File
+): Promise<void> => {
+  await uploadBytes(storageReference, file);
+};
+
+const getDownloadURLFromStorage = async (
+    storageReference: StorageReference
+): Promise<string> => {
+  return await getDownloadURL(storageReference);
+};
 
 export const useProjectsStore = defineStore('projects', () => {
-  const projects = ref([]);
-  
-  const fetchProjects = async () => {
+  const projects = ref<Project[]>([]);
+
+  const fetchProjects = async (): Promise<void> => {
     console.log('Fetching projects...');
     try {
       const querySnapshot = await getDocs(collection(db, 'projects'));
-      projects.value = querySnapshot.docs.map(doc => ({
+      //@ts-ignore
+      projects.value = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...(doc.data() as Omit<Project, 'id'>), // Приводим данные к типу Project, исключая 'id'
       }));
     } catch (error) {
       console.error('Error fetching projects:', error);
@@ -21,21 +72,25 @@ export const useProjectsStore = defineStore('projects', () => {
     }
   };
 
-  const addProject = async (projectData, imagesWithDescriptions) => {
+  const addProject = async (
+      projectData: Omit<Project, 'id' | 'images' | 'createdAt' | 'updatedAt'>,
+      imagesWithDescriptions: ImageWithDescription[]
+  ): Promise<any> => {
     try {
-      const imageUrlsWithDescriptions = [];
+      const imageUrlsWithDescriptions: { url: string; description: string }[] = [];
 
-      // Если есть изображения для загрузки
       if (imagesWithDescriptions && imagesWithDescriptions.length > 0) {
         await Promise.all(
             imagesWithDescriptions.map(async (item) => {
               if (item.file) {
-                const storageReference = storageRef(storage, `projects/${item.file.name}_${Date.now()}`);
+                const storageReference = storageRef(
+                    storage,
+                    `projects/${item.file.name}_${Date.now()}`
+                );
                 await uploadBytesToStorage(storageReference, item.file);
                 const url = await getDownloadURLFromStorage(storageReference);
                 imageUrlsWithDescriptions.push({ url, description: item.description || '' });
               } else if (item.url) {
-                // Если это существующее изображение (при редактировании), просто сохраняем его URL и описание
                 imageUrlsWithDescriptions.push({ url: item.url, description: item.description || '' });
               }
             })
@@ -44,8 +99,8 @@ export const useProjectsStore = defineStore('projects', () => {
 
       const docRef = await addDoc(collection(db, 'projects'), {
         ...projectData,
-        images: imageUrlsWithDescriptions, // Сохраняем массив объектов с URL и описаниями
-        createdAt: new Date()
+        images: imageUrlsWithDescriptions,
+        createdAt: new Date(),
       });
 
       return docRef;
@@ -55,52 +110,52 @@ export const useProjectsStore = defineStore('projects', () => {
     }
   };
 
-  const deleteProject = async (projectId) => {
+  const deleteProject = async (projectId: string): Promise<void> => {
     try {
       const projectDocRef = doc(db, 'projects', projectId);
       const projectSnapshot = await getDoc(projectDocRef);
-      const projectData = projectSnapshot.data();
+      const projectData = projectSnapshot.data() as Project | undefined;
 
-      if (projectData && projectData.images && Array.isArray(projectData.images)) {
-        // Получаем массив объектов с URL и описанием
-        const imagesToDelete = projectData.images.filter(img => img.url); // Фильтруем только с URL
-
-        // Удаляем каждое изображение из Firebase Storage
+      if (projectData?.images?.length) {
         await Promise.all(
-            imagesToDelete.map(async (image) => {
-              const storageReference = storageRef(storage, image.url);
+            projectData.images.map(async (image) => {
               try {
+                const storageReference = storageRef(storage, image.url);
                 await deleteObject(storageReference);
                 console.log(`Successfully deleted image: ${image.url}`);
-              } catch (storageError) {
+              } catch (storageError: any) {
                 console.error(`Error deleting image ${image.url}:`, storageError);
-                // Решите, хотите ли вы прерывать удаление всего проекта, если не удалось удалить изображение.
-                // В данном примере мы просто логируем ошибку и продолжаем.
+                // Можно добавить логику обработки ошибок удаления изображений
               }
             })
         );
       }
 
-      // Удаляем документ проекта из Firestore
       await deleteDoc(projectDocRef);
-      // projects.value = projects.value.filter(p => p.id !== projectId); // Эту логику лучше оставить в компоненте
-
+      // Логику обновления `projects.value` лучше оставить в компоненте
     } catch (error) {
       console.error('Error deleting project:', error);
       throw error;
     }
   };
 
-  const updateProject = async (projectId, projectData, imagesWithDescriptions) => {
+  const updateProject = async (
+      projectId: string,
+      projectData: Omit<Project, 'id' | 'images' | 'createdAt' | 'updatedAt'>,
+      imagesWithDescriptions: ImageWithDescription[]
+  ): Promise<void> => {
     console.log('Updating project:', imagesWithDescriptions);
     try {
-      const imageUrlsWithDescriptions = [];
+      const imageUrlsWithDescriptions: { url: string; description: string }[] = [];
 
       if (imagesWithDescriptions && imagesWithDescriptions.length > 0) {
         await Promise.all(
             imagesWithDescriptions.map(async (item) => {
               if (item.file) {
-                const storageReference = storageRef(storage, `projects/${item.file.name}_${Date.now()}`);
+                const storageReference = storageRef(
+                    storage,
+                    `projects/${item.file.name}_${Date.now()}`
+                );
                 await uploadBytesToStorage(storageReference, item.file);
                 const url = await getDownloadURLFromStorage(storageReference);
                 imageUrlsWithDescriptions.push({ url, description: item.description || '' });
@@ -111,34 +166,31 @@ export const useProjectsStore = defineStore('projects', () => {
         );
       }
 
-      // Обновляем документ, исключая временные данные об изображениях
       const projectRef = doc(db, 'projects', projectId);
-      const updatePayload = { ...projectData, updatedAt: new Date() };
+      const updatePayload: Partial<Project> = { ...projectData, updatedAt: new Date() };
 
-      // Если есть новые или обновленные изображения, обновляем и массив images
       if (imageUrlsWithDescriptions.length > 0) {
         updatePayload.images = imageUrlsWithDescriptions;
       }
 
       await updateDoc(projectRef, updatePayload);
-
     } catch (error) {
       console.error('Error updating project:', error);
       throw error;
     }
   };
 
-  const fetchProjectDetails = (projectId) => {
+  const fetchProjectDetails = (projectId: string): Project | undefined => {
     console.log('Fetching project details for ID:', projectId);
-    return projects.value.find(p => p.id === projectId);
+    return projects.value.find((p) => p.id === projectId);
   };
-  
+
   return {
     projects,
     fetchProjects,
     addProject,
     deleteProject,
     updateProject,
-    fetchProjectDetails
+    fetchProjectDetails,
   };
 });

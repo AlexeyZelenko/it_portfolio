@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import Card from 'primevue/card'
 import Carousel from 'primevue/carousel'
 import { useHobbiesStore } from '../stores/hobbies'
 

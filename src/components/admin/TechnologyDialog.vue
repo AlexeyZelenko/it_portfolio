@@ -2,6 +2,7 @@
 import { ref, reactive, watch } from 'vue';
 import { useTechnologiesStore, type Technology } from '../../stores/technologies';
 import { useToast } from 'primevue/usetoast';
+// @ts-ignore
 import DialogFooter from './DialogFooter.vue';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
@@ -79,7 +80,7 @@ const saveTechnology = async () => {
     closeDialog();
     emit('saved');
   } catch (error) {
-    showError(error.message || 'Failed to save technology');
+    showError('Failed to save technology');
   } finally {
     isLoading.value = false;
   }

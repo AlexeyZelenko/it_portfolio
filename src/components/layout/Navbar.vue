@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import Menu from 'primevue/menu'
 import Button from 'primevue/button'
 
-const props = defineProps<{
+defineProps<{
   isDarkMode: boolean
 }>()
 

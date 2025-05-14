@@ -15,6 +15,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/admin',
     name: 'admin',
+    // @ts-ignore
     component: () => import('../views/Admin.vue'),
     meta: {
       requiresAuth: true,
@@ -98,7 +99,7 @@ export const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(to, _, savedPosition) {
     if (savedPosition) {
       return savedPosition
     } else if (to.hash) {
@@ -112,7 +113,7 @@ const router = createRouter({
   },
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const authStore = useAuthStore()
   
   if (to.matched.some(record => record.meta.requiresAuth)) {

@@ -195,7 +195,7 @@ onMounted(async () => {
                   <span class="font-medium">{{ skill.name }}</span>
                   <span>{{ skill.level }}%</span>
                 </div>
-                <ProgressBar :value="skill.level" :style="{ height: '8px' }" />
+                <ProgressBar :value="skill.level" :style="{ height: 'px' }" />
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@ onMounted(async () => {
                   <span class="font-medium">{{ skill.name }}</span>
                   <span>{{ skill.level }}%</span>
                 </div>
-                <ProgressBar :value="skill.level" :style="{ height: '8px' }" />
+                <ProgressBar :value="skill.level" :style="{ height: '20px' }" />
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="section bg-white dark:bg-gray-800">
+    <!-- <section class="section bg-white dark:bg-gray-800">
       <div class="container">
         <h2 class="text-2xl md:text-3xl font-bold mb-12" data-aos="fade-up">{{ t('experience.certifications') }}</h2>
 
@@ -243,6 +243,6 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>

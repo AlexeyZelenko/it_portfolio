@@ -80,16 +80,7 @@ export default {
     dark: 'Темна тема'
   },
   language: 'Мова',
-  admin: {
-    title: 'Адмін панель',
-    logout: 'Вийти',
-    projects: {
-      title: 'Проєкти',
-      addNew: 'Додати новий проєкт',
-      delete: 'Проєкт успішно видалено',
-      deleteError: 'Не вдалося видалити проєкт'
-    },
-    experience: {
+  experience: {
     title: 'Досвід',
     addNew: 'Додати новий досвід',
     delete: 'Досвід успішно видалено',
@@ -111,6 +102,38 @@ export default {
     period: 'Період',
     location: 'Місце',
     technologies: 'Технології'
+  },
+  admin: {
+    title: 'Адмін панель',
+    logout: 'Вийти',
+    projects: {
+      title: 'Проєкти',
+      addNew: 'Додати новий проєкт',
+      delete: 'Проєкт успішно видалено',
+      deleteError: 'Не вдалося видалити проєкт'
+    },
+    experience: {
+      title: 'Досвід',
+      addNew: 'Додати новий досвід',
+      delete: 'Досвід успішно видалено',
+      deleteError: 'Не вдалося видалити досвід',
+      backToExperience: 'Повернутися до Досвіду',
+      overview: 'Огляд',
+      keyAchievements: 'Ключові досягнення',
+      professionalExperience: 'Професійний досвід',
+      careerJourney: 'Мій кар\'єрний шлях',
+      workExperience: 'Досвід роботи',
+      viewDetails: 'Переглянути деталі',
+      skillsAndExpertise: 'Навички та експертиза',
+      technicalSkills: 'Технічні навички',
+      softSkills: 'Гнучкі навички',
+      certifications: 'Сертифікати',
+      projects: 'Проєкти',
+      coreResponsibilities: 'Основні обов\'язки',
+      impact: 'Вплив',
+      period: 'Період',
+      location: 'Місце',
+      technologies: 'Технології'
   },
     technologies: {
       title: 'Технології',

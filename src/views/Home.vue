@@ -66,6 +66,7 @@ const navigateTo = (path: string, event?: Event) => {
 
 // Получаем только первые 3 проекта для отображения на главной,
 // соответствующие текущему языку
+//@ts-ignore
 const featuredProjects = computed<Project[]>(() => {
   return projects.value
     .filter((project) => project.language === locale.value)

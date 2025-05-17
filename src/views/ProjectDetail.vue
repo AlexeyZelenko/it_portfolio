@@ -108,7 +108,7 @@ onMounted(async (): Promise<void> => {
           <div>
             <Button
                 icon="pi pi-arrow-left"
-                label="Back to Projects"
+                :label="t('projects.backToProjects')"
                 class="p-button-text mb-4"
                 @click="router.push('/projects')"
             />
@@ -159,13 +159,13 @@ onMounted(async (): Promise<void> => {
             <!-- Project Details Tabs -->
             <div data-aos="fade-up" data-aos-delay="100">
               <TabView>
-                <TabPanel header="Overview">
+                <TabPanel :header="t('experience.overview')">
                   <div class="py-4">
                     <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
                       {{ project.description }}
                     </p>
 
-                    <h3 class="text-xl font-semibold mt-8 mb-4">Key Features</h3>
+                    <h3 class="text-xl font-semibold mt-8 mb-4">{{ t('projects.keyFeatures') }}</h3>
                     <ul class="space-y-2">
                       <li
                           v-for="(feature, index) in project.features"
@@ -179,9 +179,9 @@ onMounted(async (): Promise<void> => {
                   </div>
                 </TabPanel>
 
-                <TabPanel header="Technologies">
+                <TabPanel :header="t('projects.technologies')">
                   <div class="py-4">
-                    <h3 class="text-xl font-semibold mb-4">Technologies Used</h3>
+                    <h3 class="text-xl font-semibold mb-4">{{ t('projects.technologiesUsed') }}</h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                       <div
                           v-for="(tech, index) in project.technologies.split(',')"
@@ -193,39 +193,39 @@ onMounted(async (): Promise<void> => {
                       </div>
                     </div>
 
-                    <h3 class="text-xl font-semibold mt-8 mb-4">Development Process</h3>
+                    <h3 class="text-xl font-semibold mt-8 mb-4">{{ t('projects.developmentProcess') }}</h3>
                     <p class="text-gray-700 dark:text-gray-300 mb-4">
-                      This project was developed using an agile methodology, with a focus on iterative development and continuous feedback. The development process included:
+                      {{ t('projects.developmentDescription') }}
                     </p>
                     <ol class="list-decimal list-inside space-y-2 pl-4">
-                      <li>Requirements gathering and user research</li>
-                      <li>Wireframing and UI/UX design</li>
-                      <li>Frontend and backend development</li>
-                      <li>Testing and quality assurance</li>
-                      <li>Deployment and monitoring</li>
+                      <li>{{ t('projects.requirementsGathering') }}</li>
+                      <li>{{ t('projects.wireframing') }}</li>
+                      <li>{{ t('projects.development') }}</li>
+                      <li>{{ t('projects.testing') }}</li>
+                      <li>{{ t('projects.deployment') }}</li>
                     </ol>
                   </div>
                 </TabPanel>
 
-                <TabPanel header="Results">
+                <TabPanel :header="t('projects.results')">
                   <div class="py-4">
-                    <h3 class="text-xl font-semibold mb-4">Project Outcomes</h3>
+                    <h3 class="text-xl font-semibold mb-4">{{ t('projects.projectOutcomes') }}</h3>
                     <p class="text-gray-700 dark:text-gray-300 mb-6">
-                      This project has achieved significant results and positive outcomes for the client, including:
+                      {{ t('projects.outcomesDescription') }}
                     </p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                       <div class="text-center p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
                         <div class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">+45%</div>
-                        <div class="text-gray-700 dark:text-gray-300">User Engagement</div>
+                        <div class="text-gray-700 dark:text-gray-300">{{ t('projects.userEngagement') }}</div>
                       </div>
                       <div class="text-center p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
                         <div class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">-30%</div>
-                        <div class="text-gray-700 dark:text-gray-300">Loading Time</div>
+                        <div class="text-gray-700 dark:text-gray-300">{{ t('projects.loadingTime') }}</div>
                       </div>
                       <div class="text-center p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
                         <div class="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">+60%</div>
-                        <div class="text-gray-700 dark:text-gray-300">Conversion Rate</div>
+                        <div class="text-gray-700 dark:text-gray-300">{{ t('projects.conversionRate') }}</div>
                       </div>
                     </div>
 
@@ -253,25 +253,25 @@ onMounted(async (): Promise<void> => {
           <div class="lg:col-span-1">
             <div class="card sticky top-24" data-aos="fade-up" data-aos-delay="200">
               <div class="p-6">
-                <h3 class="text-xl font-semibold mb-4">Project Information</h3>
+                <h3 class="text-xl font-semibold mb-4">{{ t('projects.projectInformation') }}</h3>
 
                 <div class="space-y-4">
                   <div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">Category</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('projects.category') }}</div>
                     <div class="font-medium">{{ project.category }}</div>
                   </div>
 
                   <Divider />
 
                   <div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">Client</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('projects.client') }}</div>
                     <div class="font-medium">{{ project.client }}</div>
                   </div>
 
                   <Divider />
 
                   <div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400">Date</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ t('projects.date') }}</div>
                     <div class="font-medium">{{ project.date }}</div>
                   </div>
 
@@ -318,7 +318,7 @@ onMounted(async (): Promise<void> => {
     <section class="section bg-gray-50 dark:bg-gray-900">
       <div class="container">
         <h2 class="text-2xl md:text-3xl font-bold mb-12 text-center" data-aos="fade-up">
-          Related Projects
+          {{ t('projects.relatedProjects') }}
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

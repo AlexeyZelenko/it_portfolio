@@ -28,13 +28,6 @@ interface Skill {
   level: number;
 }
 
-interface Certification {
-  name: string;
-  issuer: string;
-  date: string;
-  icon: string;
-}
-
 // Определение интерфейса для хранилища опыта
 interface ExperiencesStore {
   experiences: Experience[];
@@ -71,27 +64,6 @@ const skills = ref<{ technical: Skill[]; soft: Skill[] }>({
     { name: 'Mentoring', level: 90 },
   ],
 });
-
-const certifications = ref<Certification[]>([
-  {
-    name: 'AWS Certified Solutions Architect',
-    issuer: 'Amazon Web Services',
-    date: '2023',
-    icon: 'pi pi-cloud',
-  },
-  {
-    name: 'Professional Scrum Master I',
-    issuer: 'Scrum.org',
-    date: '2022',
-    icon: 'pi pi-check-circle',
-  },
-  {
-    name: 'Vue.js Advanced Developer',
-    issuer: 'Vue.js Organization',
-    date: '2021',
-    icon: 'pi pi-code',
-  },
-]);
 
 const navigateToDetail = (id: string) => {
   router.push(`/experience/${id}`);

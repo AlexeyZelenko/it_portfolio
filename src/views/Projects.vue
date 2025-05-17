@@ -38,6 +38,7 @@ const filters = ref<string[]>([FILTER_ALL, 'Web', 'Mobile', 'UI/UX']);
 const selectedFilter = ref<string>(FILTER_ALL);
 
 // Оптимизированный расчет фильтрованных проектов
+//@ts-ignore
 const filteredProjects = computed<Project[]>(() => {
   return projects.value
       .filter((project) => {

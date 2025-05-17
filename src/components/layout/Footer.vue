@@ -49,22 +49,22 @@ const handleAdminClick = async () => {
           <h3 class="text-lg font-semibold mb-4">Connect</h3>
           <ul class="space-y-2">
             <li>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center">
+              <a href="https://github.com/AlexeyZelenko" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center">
                 <i class="pi pi-github mr-2"></i> GitHub
               </a>
             </li>
             <li>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center">
+              <a href="https://www.linkedin.com/in/oleksii-zelenko-523a3a1a1/" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center">
                 <i class="pi pi-linkedin mr-2"></i> LinkedIn
               </a>
             </li>
             <li>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center">
-                <i class="pi pi-twitter mr-2"></i> Twitter
+              <a href="https://t.me/creator_oleksii" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center">
+                <i class="pi pi-telegram mr-2"></i> Telegram
               </a>
             </li>
             <li>
-              <a href="mailto:contact@example.com" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center">
+              <a href="mailto:pro.inﬁnite.box@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center">
                 <i class="pi pi-envelope mr-2"></i> Email
               </a>
             </li>
@@ -77,14 +77,14 @@ const handleAdminClick = async () => {
           &copy; {{ currentYear }} Portfolio. All rights reserved.
         </p>
         <div class="flex items-center space-x-6 mt-4 md:mt-0">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          <a href="https://github.com/AlexeyZelenko" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
             <i class="pi pi-github text-xl"></i>
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          <a href="https://www.linkedin.com/in/oleksii-zelenko-523a3a1a1/" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
             <i class="pi pi-linkedin text-xl"></i>
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-            <i class="pi pi-twitter text-xl"></i>
+          <a href="https://t.me/creator_oleksii" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <i class="pi pi-telegram text-xl"></i>
           </a>
           <div class="border-l border-gray-200 dark:border-gray-700 pl-6">
             <Button

@@ -88,6 +88,16 @@ const loadProjects = async () => {
   }
 };
 
+const deleteProject = async (project) => {
+  try {
+    await projectsStore.deleteProject(project.id);
+    showToast('success', 'Проект успешно удален');
+    await loadProjects();
+  } catch (error) {
+    showToast('error', 'Не удалось удалить проект');
+  }
+};
+
 const deleteExperiense = async (experience) => {
   await experiencesStore.deleteExperience(experience.id);
   showToast('success', 'Deleted');
@@ -211,7 +221,7 @@ const deleteTechnology = async (technology) => {
           :projects="projectsStore.projects"
           :isLoading="isProjectsLoading"
           @edit="showProjectDialog"
-          @delete="loadProjects"
+          @delete="deleteProject"
         />
 
         <ProjectDialog

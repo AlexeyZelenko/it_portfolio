@@ -64,7 +64,7 @@ export const useAuthStore = defineStore('auth', (): AuthStore => {
 
   const loadResumeUrl = async (): Promise<void> => {
     try {
-      const fileRef: StorageReference = storageRef(storage, 'resume/cv.pdf');
+      const fileRef: StorageReference = storageRef(storage, 'resume/Resume.pdf');
       resumeUrl.value = await getDownloadURL(fileRef);
     } catch (error: any) {
       console.error('Error loading resume URL:', error);

@@ -17,30 +17,24 @@ onMounted(async () => {
   await authStore.loadResumeUrl()
 })
 
-const contactInfo = [
-  {
-    icon: 'pi pi-phone',
-    title: 'Phone',
-    value: '+380 (99) 123-45-67',
-    link: 'tel:+380991234567'
-  },
+const contactInfo = [  
   {
     icon: 'pi pi-telegram',
     title: 'Telegram',
-    value: '@username',
-    link: 'https://t.me/username'
+    value: '@creator_oleksii',
+    link: 'https://t.me/creator_oleksii'
   },
   {
     icon: 'pi pi-linkedin',
     title: 'LinkedIn',
-    value: 'John Doe',
-    link: 'https://linkedin.com/in/johndoe'
+    value: 'Oleksii',
+    link: 'https://www.linkedin.com/in/oleksii-zelenko-523a3a1a1/'
   },
   {
     icon: 'pi pi-envelope',
     title: 'Email',
-    value: 'contact@example.com',
-    link: 'mailto:contact@example.com'
+    value: 'pro.inﬁnite.box@gmail.com',
+    link: 'mailto:pro.inﬁnite.box@gmail.com'
   }
 ]
 </script>

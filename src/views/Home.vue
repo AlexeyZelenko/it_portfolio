@@ -89,7 +89,7 @@ onMounted(async () => {
               <div class="absolute w-full h-full bg-gradient-to-tr from-primary-600 to-secondary-600 rounded-full opacity-20 animate-float" style="animation-delay: 0.5s;"></div>
               <div class="absolute w-full h-full bg-gradient-to-tr from-primary-700 to-secondary-700 rounded-full opacity-10 animate-float" style="animation-delay: 1s;"></div>
               <img
-                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                  src="https://firebasestorage.googleapis.com/v0/b/it-portfolio-specialist.firebasestorage.app/o/avatar%2Favatar_edit_2.webp?alt=media&token=b82c52c4-2d05-4f9a-ad10-8921c2b9851a"
                   alt="Developer Portrait"
                   class="absolute inset-0 w-full h-full object-cover rounded-full border-4 border-white dark:border-gray-800"
               />
@@ -140,7 +140,7 @@ onMounted(async () => {
               </div>
             </template>
             <template #title>
-              <h3 class="text-4xl font-bold">50+</h3>
+              <h3 class="text-4xl font-bold">20+</h3>
             </template>
             <template #content>
               <p class="text-gray-600 dark:text-gray-400">{{ t('home.about.projects') }}</p>
@@ -156,7 +156,7 @@ onMounted(async () => {
               </div>
             </template>
             <template #title>
-              <h3 class="text-4xl font-bold">30+</h3>
+              <h3 class="text-4xl font-bold">1000+</h3>
             </template>
             <template #content>
               <p class="text-gray-600 dark:text-gray-400">{{ t('home.about.clients') }}</p>

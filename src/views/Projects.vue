@@ -17,6 +17,7 @@ interface Project {
   category: 'Web' | 'Mobile' | 'UI/UX';
   technologies: string;
   images: ProjectImage[];
+  subtitle: string
 }
 
 interface ProjectsStore {
@@ -107,7 +108,7 @@ onMounted(async () => {
                 </span>
               </div>
               <p class="text-gray-600 dark:text-gray-400 mb-4">
-                {{ project.description }}
+                {{ project.subtitle }}
               </p>
               <div class="flex flex-wrap gap-2">
                 <span

@@ -6,7 +6,8 @@ export default {
     experience: 'Experience',
     hobbies: 'Hobbies',
     contact: 'Contact',
-    admin: 'Admin Panel'
+    admin: 'Admin Panel',
+    resume: 'Resume'
   },
   home: {
     greeting: 'Hi there, I\'m',

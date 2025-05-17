@@ -6,7 +6,8 @@ export default {
     experience: 'Досвід',
     hobbies: 'Хобі',
     contact: 'Контакти',
-    admin: 'Адмін панель'
+    admin: 'Адмін панель',
+    resume: 'Резюме'
   },
   home: {
     greeting: 'Привіт, я',

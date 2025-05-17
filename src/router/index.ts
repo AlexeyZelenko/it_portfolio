@@ -86,6 +86,15 @@ export const routes: RouteRecordRaw[] = [
     }
   },
   {
+    path: '/resume',
+    name: 'resume',
+    component: () => import('../views/Resume.vue'),
+    meta: {
+      title: 'Resume',
+      transitionName: 'slide-left'
+    }
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('../views/NotFound.vue'),

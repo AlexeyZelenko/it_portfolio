@@ -42,7 +42,7 @@ const toggleLanguageMenu = (event: Event) => {
   languageMenu.value.toggle(event)
 }
 
-const navItems = ['home', 'projects', 'technologies', 'experience', 'hobbies', 'contact']
+const navItems = ['home', 'projects', 'technologies', 'experience', 'hobbies', 'contact', 'resume']
 </script>
 
 <template>

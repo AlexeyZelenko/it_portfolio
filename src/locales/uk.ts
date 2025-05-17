@@ -5,7 +5,8 @@ export default {
     technologies: 'Технології',
     experience: 'Досвід',
     hobbies: 'Хобі',
-    contact: 'Контакти'
+    contact: 'Контакти',
+    admin: 'Адмін панель'
   },
   home: {
     greeting: 'Привіт, я',
@@ -71,5 +72,53 @@ export default {
     light: 'Світла тема',
     dark: 'Темна тема'
   },
-  language: 'Мова'
+  language: 'Мова',
+  admin: {
+    title: 'Адмін панель',
+    logout: 'Вийти',
+    projects: {
+      title: 'Проєкти',
+      addNew: 'Додати новий проєкт',
+      delete: 'Проєкт успішно видалено',
+      deleteError: 'Не вдалося видалити проєкт'
+    },
+    experience: {
+      title: 'Досвід',
+      addNew: 'Додати новий досвід',
+      delete: 'Досвід успішно видалено',
+      deleteError: 'Не вдалося видалити досвід'
+    },
+    technologies: {
+      title: 'Технології',
+      addNew: 'Додати нову технологію',
+      delete: 'Технологія успішно видалена',
+      deleteError: 'Не вдалося видалити технологію',
+      name: 'Назва',
+      category: 'Категорія',
+      proficiency: 'Рівень володіння',
+      icon: 'Іконка'
+    },
+    hobbies: {
+      title: 'Хобі',
+      addNew: 'Додати нове хобі',
+      delete: 'Хобі успішно видалено',
+      deleteError: 'Не вдалося видалити хобі'
+    },
+    resume: {
+      title: 'Управління резюме',
+      upload: 'Завантажити резюме (PDF)',
+      current: 'Поточне резюме:',
+      view: 'Переглянути поточне резюме',
+      success: 'Резюме успішно завантажено',
+      error: 'Не вдалося завантажити резюме',
+      fileTypeError: 'Будь ласка, завантажте файл PDF'
+    },
+    common: {
+      actions: 'Дії',
+      save: 'Зберегти',
+      cancel: 'Скасувати',
+      edit: 'Редагувати',
+      delete: 'Видалити'
+    }
+  }
 }

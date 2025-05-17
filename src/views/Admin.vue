@@ -6,6 +6,7 @@ import { useExperiencesStore } from '../stores/experiences';
 import { useTechnologiesStore } from '../stores/technologies';
 import { useHobbiesStore } from '../stores/hobbies';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import ProjectsList from '../components/admin/ProjectsList.vue';
 import ProjectDialog from '../components/admin/ProjectDialog.vue';
 import ExperiencesList from '../components/admin/ExperiencesList.vue';
@@ -29,6 +30,7 @@ const technologiesStore = useTechnologiesStore();
 const hobbiesStore = useHobbiesStore();
 const router = useRouter();
 const toast = useToast();
+const { t } = useI18n();
 
 const projectDialogVisible = ref(false);
 const experienceDialogVisible = ref(false);
@@ -49,16 +51,16 @@ const handleResumeUpload = async (event) => {
   
   const file = event.files[0];
   if (file.type !== 'application/pdf') {
-    toast.add({ severity: 'error', detail: 'Please upload a PDF file', life: 3000 });
+    toast.add({ severity: 'error', detail: t('admin.resume.fileTypeError'), life: 3000 });
     return;
   }
 
   isUploadingResume.value = true;
   try {
     await authStore.uploadResume(file);
-    toast.add({ severity: 'success', detail: 'Resume uploaded successfully', life: 3000 });
+    toast.add({ severity: 'success', detail: t('admin.resume.success'), life: 3000 });
   } catch (error) {
-    toast.add({ severity: 'error', detail: 'Failed to upload resume', life: 3000 });
+    toast.add({ severity: 'error', detail: t('admin.resume.error'), life: 3000 });
   } finally {
     isUploadingResume.value = false;
   }
@@ -91,17 +93,21 @@ const loadProjects = async () => {
 const deleteProject = async (project) => {
   try {
     await projectsStore.deleteProject(project.id);
-    showToast('success', 'Проект успешно удален');
+    showToast('success', t('admin.projects.delete'));
     await loadProjects();
   } catch (error) {
-    showToast('error', 'Не удалось удалить проект');
+    showToast('error', t('admin.projects.deleteError'));
   }
 };
 
 const deleteExperiense = async (experience) => {
-  await experiencesStore.deleteExperience(experience.id);
-  showToast('success', 'Deleted');
-  loadExperiences()
+  try {
+    await experiencesStore.deleteExperience(experience.id);
+    showToast('success', t('admin.experience.delete'));
+    await loadExperiences();
+  } catch (error) {
+    showToast('error', t('admin.experience.deleteError'));
+  }
 }
 
 const loadExperiences = async () => {
@@ -109,7 +115,7 @@ const loadExperiences = async () => {
   try {
     await experiencesStore.fetchExperiences();
   } catch (error) {
-    showToast('error', 'Failed to load experiences');
+    showToast('error', t('admin.experience.deleteError'));
   } finally {
     isExperiencesLoading.value = false;
   }
@@ -131,7 +137,7 @@ const loadHobbies = async () => {
   try {
     await hobbiesStore.fetchHobbies();
   } catch (error) {
-    showToast('error', 'Не удалось загрузить хобби');
+    showToast('error', t('admin.hobbies.deleteError'));
   } finally {
     isHobbiesLoading.value = false;
   }
@@ -184,10 +190,10 @@ const handleHobbySaved = () => {
 const deleteTechnology = async (technology) => {
   try {
     await technologiesStore.deleteTechnology(technology.id);
-    showToast('success', 'Technology deleted successfully');
+    showToast('success', t('admin.technologies.delete'));
     await loadTechnologies();
   } catch (error) {
-    showToast('error', 'Failed to delete technology');
+    showToast('error', t('admin.technologies.deleteError'));
   }
 };
 </script>
@@ -197,9 +203,9 @@ const deleteTechnology = async (technology) => {
     <Toast />
 
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold">Admin Panel</h1>
+      <h1 class="text-2xl font-bold">{{ t('admin.title') }}</h1>
       <Button
-        label="Logout"
+        :label="t('admin.logout')"
         icon="pi pi-sign-out"
         class="p-button-danger"
         @click="authStore.logout"
@@ -207,10 +213,10 @@ const deleteTechnology = async (technology) => {
     </div>
 
     <TabView>
-      <TabPanel header="Projects">
+      <TabPanel :header="t('admin.projects.title')">
         <div class="mb-4">
           <Button
-            label="Add New Project"
+            :label="t('admin.projects.addNew')"
             icon="pi pi-plus"
             :disabled="isProjectsLoading"
             @click="showProjectDialog()"
@@ -232,10 +238,10 @@ const deleteTechnology = async (technology) => {
         />
       </TabPanel>
 
-      <TabPanel header="Experience">
+      <TabPanel :header="t('admin.experience.title')">
         <div class="mb-4">
           <Button
-            label="Add New Experience"
+            :label="t('admin.experience.addNew')"
             icon="pi pi-plus"
             :disabled="isExperiencesLoading"
             @click="showExperienceDialog()"
@@ -257,10 +263,10 @@ const deleteTechnology = async (technology) => {
         />
       </TabPanel>
 
-      <TabPanel header="Technologies">
+      <TabPanel :header="t('admin.technologies.title')">
         <div class="mb-4">
           <Button
-            label="Add New Technology"
+            :label="t('admin.technologies.addNew')"
             icon="pi pi-plus"
             :disabled="isTechnologiesLoading"
             @click="showTechnologyDialog()"
@@ -272,19 +278,19 @@ const deleteTechnology = async (technology) => {
           :loading="isTechnologiesLoading"
           class="p-datatable-sm"
         >
-          <Column field="name" header="Name" />
-          <Column field="category" header="Category" />
-          <Column field="proficiency" header="Proficiency">
+          <Column field="name" :header="t('admin.technologies.name')" />
+          <Column field="category" :header="t('admin.technologies.category')" />
+          <Column field="proficiency" :header="t('admin.technologies.proficiency')">
             <template #body="slotProps">
               {{ slotProps.data.proficiency }}%
             </template>
           </Column>
-          <Column field="icon" header="Icon">
+          <Column field="icon" :header="t('admin.technologies.icon')">
             <template #body="slotProps">
               <i :class="slotProps.data.icon"></i>
             </template>
           </Column>
-          <Column header="Actions">
+          <Column :header="t('admin.common.actions')">
             <template #body="slotProps">
               <Button
                 icon="pi pi-pencil"
@@ -307,10 +313,10 @@ const deleteTechnology = async (technology) => {
         />
       </TabPanel>
       
-      <TabPanel header="Hobbies">
+      <TabPanel :header="t('admin.hobbies.title')">
         <div class="mb-4">
           <Button
-            label="Add New Hobby"
+            :label="t('admin.hobbies.addNew')"
             icon="pi pi-plus"
             :disabled="isHobbiesLoading"
             @click="showHobbyDialog()"
@@ -332,9 +338,9 @@ const deleteTechnology = async (technology) => {
         />
       </TabPanel>
 
-      <TabPanel header="Resume">
+      <TabPanel :header="t('admin.resume.title')">
         <div class="card p-6">
-          <h2 class="text-xl font-semibold mb-4">Resume Management</h2>
+          <h2 class="text-xl font-semibold mb-4">{{ t('admin.resume.title') }}</h2>
           
           <div class="mb-4">
             <FileUpload
@@ -342,21 +348,21 @@ const deleteTechnology = async (technology) => {
               :auto="true"
               accept="application/pdf"
               :maxFileSize="5000000"
-              chooseLabel="Upload Resume (PDF)"
+              :chooseLabel="t('admin.resume.upload')"
               @select="handleResumeUpload"
               :loading="isUploadingResume"
             />
           </div>
           
           <div v-if="authStore.resumeUrl" class="mt-4">
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Current Resume:</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{{ t('admin.resume.current') }}</p>
             <div class="flex items-center gap-4">
               <a 
                 :href="authStore.resumeUrl" 
                 target="_blank" 
                 class="text-primary-600 dark:text-primary-400 hover:underline"
               >
-                View Current Resume
+                {{ t('admin.resume.view') }}
               </a>
             </div>
           </div>

@@ -5,7 +5,8 @@ export default {
     technologies: 'Technologies',
     experience: 'Experience',
     hobbies: 'Hobbies',
-    contact: 'Contact'
+    contact: 'Contact',
+    admin: 'Admin Panel'
   },
   home: {
     greeting: 'Hi there, I\'m',
@@ -71,5 +72,53 @@ export default {
     light: 'Light mode',
     dark: 'Dark mode'
   },
-  language: 'Language'
+  language: 'Language',
+  admin: {
+    title: 'Admin Panel',
+    logout: 'Logout',
+    projects: {
+      title: 'Projects',
+      addNew: 'Add New Project',
+      delete: 'Project deleted successfully',
+      deleteError: 'Failed to delete project'
+    },
+    experience: {
+      title: 'Experience',
+      addNew: 'Add New Experience',
+      delete: 'Experience deleted successfully',
+      deleteError: 'Failed to delete experience'
+    },
+    technologies: {
+      title: 'Technologies',
+      addNew: 'Add New Technology',
+      delete: 'Technology deleted successfully',
+      deleteError: 'Failed to delete technology',
+      name: 'Name',
+      category: 'Category',
+      proficiency: 'Proficiency',
+      icon: 'Icon'
+    },
+    hobbies: {
+      title: 'Hobbies',
+      addNew: 'Add New Hobby',
+      delete: 'Hobby deleted successfully',
+      deleteError: 'Failed to delete hobby'
+    },
+    resume: {
+      title: 'Resume Management',
+      upload: 'Upload Resume (PDF)',
+      current: 'Current Resume:',
+      view: 'View Current Resume',
+      success: 'Resume uploaded successfully',
+      error: 'Failed to upload resume',
+      fileTypeError: 'Please upload a PDF file'
+    },
+    common: {
+      actions: 'Actions',
+      save: 'Save',
+      cancel: 'Cancel',
+      edit: 'Edit',
+      delete: 'Delete'
+    }
+  }
 }

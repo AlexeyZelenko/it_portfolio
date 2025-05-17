@@ -2,6 +2,7 @@
 import { useHobbiesStore } from '../../stores/hobbies';
 import { useToast } from 'primevue/usetoast';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from 'primevue/button';
@@ -38,6 +39,7 @@ const emit = defineEmits<Emits>();
 const hobbiesStore = useHobbiesStore();
 const toast = useToast();
 const isDeleting = ref(false);
+const { t } = useI18n();
 
 const deleteHobby = async (hobby: Hobby) => {
   if (isDeleting.value) return;
@@ -46,7 +48,7 @@ const deleteHobby = async (hobby: Hobby) => {
   try {
     if (hobby.id) {
       await hobbiesStore.deleteHobby(hobby.id);
-      toast.add({ severity: 'success', summary: 'Успех', detail: 'Хобби удалено', life: 3000 });
+      toast.add({ severity: 'success', summary: 'Успех', detail: t('admin.hobbies.delete'), life: 3000 });
       emit('delete');
     } else {
       toast.add({ severity: 'warn', summary: 'Предупреждение', detail: 'ID хобби не определен', life: 3000 });

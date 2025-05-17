@@ -26,6 +26,7 @@ export default {
     title: 'Проєкти',
     subtitle: 'Перегляньте деякі з моїх останніх робіт',
     viewMore: 'Деталі',
+    viewAll: 'Переглянути всі проєкти',
     technologies: 'Використані технології',
     visit: 'Відкрити сайт',
     source: 'Переглянути код'
@@ -36,7 +37,13 @@ export default {
     frontend: 'Фронтенд',
     backend: 'Бекенд',
     mobile: 'Мобільна розробка',
-    other: 'Інші інструменти'
+    other: 'Інші інструменти',
+    levels: {
+      expert: 'Експерт',
+      advanced: 'Просунутий',
+      intermediate: 'Середній',
+      beginner: 'Початківець'
+    }
   },
   contact: {
     title: 'Зв\'язатися',
@@ -83,11 +90,28 @@ export default {
       deleteError: 'Не вдалося видалити проєкт'
     },
     experience: {
-      title: 'Досвід',
-      addNew: 'Додати новий досвід',
-      delete: 'Досвід успішно видалено',
-      deleteError: 'Не вдалося видалити досвід'
-    },
+    title: 'Досвід',
+    addNew: 'Додати новий досвід',
+    delete: 'Досвід успішно видалено',
+    deleteError: 'Не вдалося видалити досвід',
+    backToExperience: 'Повернутися до Досвіду',
+    overview: 'Огляд',
+    keyAchievements: 'Ключові досягнення',
+    professionalExperience: 'Професійний досвід',
+    careerJourney: 'Мій кар\'єрний шлях',
+    workExperience: 'Досвід роботи',
+    viewDetails: 'Переглянути деталі',
+    skillsAndExpertise: 'Навички та експертиза',
+    technicalSkills: 'Технічні навички',
+    softSkills: 'Гнучкі навички',
+    certifications: 'Сертифікати',
+    projects: 'Проєкти',
+    coreResponsibilities: 'Основні обов\'язки',
+    impact: 'Вплив',
+    period: 'Період',
+    location: 'Місце',
+    technologies: 'Технології'
+  },
     technologies: {
       title: 'Технології',
       addNew: 'Додати нову технологію',

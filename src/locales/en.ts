@@ -26,6 +26,7 @@ export default {
     title: 'Projects',
     subtitle: 'Check out some of my recent work',
     viewMore: 'View details',
+    viewAll: 'View all projects',
     technologies: 'Technologies used',
     visit: 'Visit live',
     source: 'View source'
@@ -36,7 +37,13 @@ export default {
     frontend: 'Frontend',
     backend: 'Backend',
     mobile: 'Mobile',
-    other: 'Other Tools'
+    other: 'Other Tools',
+    levels: {
+      expert: 'Expert',
+      advanced: 'Advanced',
+      intermediate: 'Intermediate',
+      beginner: 'Beginner'
+    }
   },
   contact: {
     title: 'Get in Touch',
@@ -83,11 +90,28 @@ export default {
       deleteError: 'Failed to delete project'
     },
     experience: {
-      title: 'Experience',
-      addNew: 'Add New Experience',
-      delete: 'Experience deleted successfully',
-      deleteError: 'Failed to delete experience'
-    },
+    title: 'Experience',
+    addNew: 'Add New Experience',
+    delete: 'Experience deleted successfully',
+    deleteError: 'Failed to delete experience',
+    backToExperience: 'Back to Experience',
+    overview: 'Overview',
+    keyAchievements: 'Key Achievements',
+    professionalExperience: 'Professional Experience',
+    careerJourney: 'My Career Journey',
+    workExperience: 'Work Experience',
+    viewDetails: 'View Details',
+    skillsAndExpertise: 'Skills & Expertise',
+    technicalSkills: 'Technical Skills',
+    softSkills: 'Soft Skills',
+    certifications: 'Certifications',
+    projects: 'Projects',
+    coreResponsibilities: 'Core Responsibilities',
+    impact: 'Impact',
+    period: 'Period',
+    location: 'Location',
+    technologies: 'Technologies'
+  },
     technologies: {
       title: 'Technologies',
       addNew: 'Add New Technology',

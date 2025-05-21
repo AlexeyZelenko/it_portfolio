@@ -1,13 +1,72 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ProgressBar from 'primevue/progressbar'
 import { useTechnologiesStore } from '../stores/technologies'
+import { useProjectsStore } from '../stores/projects'
 import { storeToRefs } from 'pinia'
+import type { Technology } from '../stores/technologies'
 
 const { t } = useI18n()
 const technologiesStore = useTechnologiesStore()
+const projectsStore = useProjectsStore()
 const { technologies } = storeToRefs(technologiesStore)
+const { projects } = storeToRefs(projectsStore)
+
+// Объединенный список технологий с уникальными элементами
+const combinedTechnologies = computed(() => {
+  // Получаем технологии из хранилища технологий
+  const techList = [...technologies.value]
+  
+  // Получаем технологии из проектов
+  const projectTechs: Technology[] = []
+  
+  // Обрабатываем технологии из каждого проекта
+  projects.value.forEach(project => {
+    if (project.technologies) {
+      // Разделяем строку технологий на массив
+      const techNames = project.technologies.split(',').map(t => t.trim())
+      
+      // Создаем объекты технологий из имен
+      techNames.forEach(techName => {
+        // Определяем категорию по умолчанию (можно улучшить логику определения категории)
+        let category: 'frontend' | 'backend' | 'mobile' | 'other' = 'other'
+        
+        // Простая логика определения категории по имени технологии
+        if (['React', 'Vue', 'Angular', 'HTML', 'CSS', 'JavaScript', 'TypeScript'].includes(techName)) {
+          category = 'frontend'
+        } else if (['Node.js', 'Express', 'Django', 'Flask', 'PHP', 'Laravel', 'Spring'].includes(techName)) {
+          category = 'backend'
+        } else if (['React Native', 'Flutter', 'Swift', 'Kotlin', 'Android', 'iOS'].includes(techName)) {
+          category = 'mobile'
+        }
+        
+        projectTechs.push({
+          name: techName,
+          category: category,
+          proficiency: 70, // Устанавливаем средний уровень владения по умолчанию
+          icon: 'pi pi-code' // Иконка по умолчанию
+        })
+      })
+    }
+  })
+  
+  // Объединяем списки технологий
+  const allTechs = [...techList, ...projectTechs]
+  
+  // Создаем Map для хранения уникальных технологий по имени
+  const uniqueTechMap = new Map()
+  
+  // Заполняем Map, отдавая приоритет технологиям из хранилища технологий
+  allTechs.forEach(tech => {
+    if (!uniqueTechMap.has(tech.name)) {
+      uniqueTechMap.set(tech.name, tech)
+    }
+  })
+  
+  // Преобразуем Map обратно в массив
+  return Array.from(uniqueTechMap.values())
+})
 
 // Константа для уровней владения - лучше переиспользовать
 const PROFICIENCY_LEVELS = {
@@ -26,10 +85,10 @@ const getProficiencyLevel = (proficiency: number) => {
 // Вычисляемые свойства для фильтрации технологий
 const techByCategory = computed(() => {
   const categories = {
-    frontend: technologies.value.filter(tech => tech.category === 'frontend'),
-    backend: technologies.value.filter(tech => tech.category === 'backend'),
-    mobile: technologies.value.filter(tech => tech.category === 'mobile'),
-    other: technologies.value.filter(tech => tech.category === 'other')
+    frontend: combinedTechnologies.value.filter(tech => tech.category === 'frontend'),
+    backend: combinedTechnologies.value.filter(tech => tech.category === 'backend'),
+    mobile: combinedTechnologies.value.filter(tech => tech.category === 'mobile'),
+    other: combinedTechnologies.value.filter(tech => tech.category === 'other')
   }
   return categories
 })
@@ -59,12 +118,15 @@ const categoryConfig = {
 }
 
 onMounted(async () => {
-  await technologiesStore.fetchTechnologies()
+  await Promise.all([
+    technologiesStore.fetchTechnologies(),
+    projectsStore.fetchProjects()
+  ])
 })
 </script>
 
 <template>
-  <div v-if="technologies?.length">
+  <div v-if="combinedTechnologies?.length">
     <!-- Technologies Header -->
     <section class="bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-20">
       <div class="container text-center">

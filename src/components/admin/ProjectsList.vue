@@ -7,6 +7,9 @@ import Divider from 'primevue/divider';
 import Dropdown from 'primevue/dropdown';
 import { useI18n } from 'vue-i18n';
 
+// Максимальное количество отображаемых технологий
+const MAX_VISIBLE_TECHNOLOGIES = 3;
+
 const props = defineProps({
   projects: {
     type: Array,
@@ -34,6 +37,24 @@ const filteredProjects = computed(() => {
   }
   return props.projects.filter(project => project.language === selectedLanguage.value);
 });
+
+// Функция для получения ограниченного списка технологий с индикатором оставшихся
+const getLimitedTechnologies = (technologies) => {
+  if (!technologies) return { visibleTechs: [], remainingCount: 0 };
+  
+  // Преобразуем строку технологий в массив, если это строка
+  const techArray = Array.isArray(technologies) 
+    ? technologies 
+    : technologies.split(',').map(tech => tech.trim());
+  
+  const visibleTechs = techArray.slice(0, MAX_VISIBLE_TECHNOLOGIES);
+  const remainingCount = techArray.length - visibleTechs.length;
+  
+  return {
+    visibleTechs,
+    remainingCount
+  };
+};
 
 </script>
 
@@ -101,13 +122,17 @@ const filteredProjects = computed(() => {
 
         <div v-if="project.technologies" class="mb-2">
           <span
-              v-for="(tech, index) in (Array.isArray(project.technologies)
-              ? project.technologies
-              : project.technologies.split(','))"
+              v-for="(tech, index) in getLimitedTechnologies(project.technologies).visibleTechs"
               :key="index"
               class="inline-block bg-gray-100 text-xs px-2 py-1 rounded mr-1 mb-1"
           >
-            {{ tech.trim() }}
+            {{ Array.isArray(tech) ? tech : tech.trim() }}
+          </span>
+          <span
+              v-if="getLimitedTechnologies(project.technologies).remainingCount > 0"
+              class="inline-block bg-primary-100 text-primary-700 text-xs px-2 py-1 rounded mr-1 mb-1 font-medium"
+          >
+            +{{ getLimitedTechnologies(project.technologies).remainingCount }}
           </span>
         </div>
 

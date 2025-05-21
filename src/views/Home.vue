@@ -81,6 +81,21 @@ const getTechnologies = (techString: string): string[] => {
   return techString?.split(',').map(tech => tech.trim()) || [];
 };
 
+// Максимальное количество отображаемых технологий
+const MAX_VISIBLE_TECHNOLOGIES = 3;
+
+// Получить ограниченный список технологий с индикатором оставшихся
+const getLimitedTechnologies = (techString: string) => {
+  const allTechs = getTechnologies(techString);
+  const visibleTechs = allTechs.slice(0, MAX_VISIBLE_TECHNOLOGIES);
+  const remainingCount = allTechs.length - visibleTechs.length;
+  
+  return {
+    visibleTechs,
+    remainingCount
+  };
+};
+
 // Получить URL изображения с фолбэком
 const getImageUrl = (project: Project): string => {
   return project.images && project.images.length > 0 
@@ -253,11 +268,17 @@ onMounted(async () => {
               </p>
               <div class="flex flex-wrap gap-2">
                 <span
-                  v-for="(tech, techIndex) in getTechnologies(project.technologies)"
+                  v-for="(tech, techIndex) in getLimitedTechnologies(project.technologies).visibleTechs"
                   :key="`tech-${project.id}-${techIndex}`"
                   class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
                 >
                   {{ tech }}
+                </span>
+                <span
+                  v-if="getLimitedTechnologies(project.technologies).remainingCount > 0"
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200"
+                >
+                  +{{ getLimitedTechnologies(project.technologies).remainingCount }}
                 </span>
               </div>
             </div>

@@ -1,10 +1,13 @@
 <script setup>
+import { ref, computed } from 'vue';
 import { formatDate, truncateDescription } from '../../utils/helpers';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import Divider from 'primevue/divider';
+import Dropdown from 'primevue/dropdown';
+import { useI18n } from 'vue-i18n';
 
-defineProps({
+const props = defineProps({
   projects: {
     type: Array,
     default: () => []
@@ -13,9 +16,40 @@ defineProps({
 });
 
 const emit = defineEmits(['edit', 'delete']);
+const { t } = useI18n();
+
+// Опции для фильтра языка
+const languageOptions = [
+  { label: t('admin.common.all'), value: 'all' },
+  { label: t('admin.common.english'), value: 'en' },
+  { label: t('admin.common.ukrainian'), value: 'uk' }
+];
+
+const selectedLanguage = ref('all');
+
+// Фильтрация проектов по языку
+const filteredProjects = computed(() => {
+  if (selectedLanguage.value === 'all') {
+    return props.projects;
+  }
+  return props.projects.filter(project => project.language === selectedLanguage.value);
+});
+
 </script>
 
 <template>
+  <!-- Фильтр по языку -->
+  <div class="mb-4 flex items-center" v-if="!isLoading && projects.length">
+    <label class="mr-2">{{ t('admin.projects.filterByLanguage') }}:</label>
+    <Dropdown 
+      v-model="selectedLanguage" 
+      :options="languageOptions" 
+      optionLabel="label" 
+      optionValue="value"
+      class="w-48"
+    />
+  </div>
+
   <div v-if="isLoading" class="flex justify-center my-8">
     <i class="pi pi-spin pi-spinner text-4xl"></i>
   </div>
@@ -26,7 +60,7 @@ const emit = defineEmits(['edit', 'delete']);
 
   <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <Card
-        v-for="project in projects"
+        v-for="project in filteredProjects"
         :key="project.id"
         class="shadow-md hover:shadow-lg transition-shadow"
     >

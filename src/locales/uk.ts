@@ -132,7 +132,10 @@ export default {
       title: 'Проєкти',
       addNew: 'Додати новий проєкт',
       delete: 'Проєкт успішно видалено',
-      deleteError: 'Не вдалося видалити проєкт'
+      deleteError: 'Не вдалося видалити проєкт',
+      save: 'Проєкт успішно збережено',
+      saveError: 'Не вдалося зберегти проєкт',
+      filterByLanguage: 'Фільтрувати за мовою'
     },
     experience: {
       title: 'Досвід',
@@ -187,7 +190,12 @@ export default {
       save: 'Зберегти',
       cancel: 'Скасувати',
       edit: 'Редагувати',
-      delete: 'Видалити'
+      delete: 'Видалити',
+      loading: 'Завантаження...',
+      noData: 'Немає доступних даних',
+      all: 'Всі',
+      english: 'Англійська',
+      ukrainian: 'Українська'
     }
   }
 }

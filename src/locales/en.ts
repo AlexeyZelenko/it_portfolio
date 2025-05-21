@@ -132,7 +132,10 @@ export default {
       title: 'Projects',
       addNew: 'Add New Project',
       delete: 'Project deleted successfully',
-      deleteError: 'Failed to delete project'
+      deleteError: 'Failed to delete project',
+      save: 'Project saved successfully',
+      saveError: 'Failed to save project',
+      filterByLanguage: 'Filter by language'
     },
     experience: {
     title: 'Experience',
@@ -187,7 +190,12 @@ export default {
       save: 'Save',
       cancel: 'Cancel',
       edit: 'Edit',
-      delete: 'Delete'
+      delete: 'Delete',
+      loading: 'Loading...',
+      noData: 'No data available',
+      all: 'All',
+      english: 'English',
+      ukrainian: 'Ukrainian'
     }
   }
 }
